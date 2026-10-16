@@ -7,7 +7,8 @@
 [![Docker](https://img.shields.io/badge/Docker-Enterprise-2496ED.svg?logo=docker&logoColor=white)](https://docker.com)
 [![Ollama](https://img.shields.io/badge/Ollama-Dual--Engine-black.svg?logo=ollama&logoColor=white)](https://ollama.ai)
 [![HL7 FHIR R4](https://img.shields.io/badge/HL7_FHIR-R4-orange.svg)](https://hl7.org/fhir)
-[![License: Proprietary](https://img.shields.io/badge/License-Enterprise-red.svg)]()
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
+[![Copyright: Yash Borude](https://img.shields.io/badge/Copyright-%C2%A9_2025--2026_Yash_Borude-blue.svg)](LICENSE)
 
 MediScan Enterprise is an enterprise-grade, real-time autonomous clinical decision support (CDS) and remote patient monitoring (RPM) platform. Built from the ground up for zero hallucinations, multi-tenant HIPAA isolation, and cryptographic auditability, it pairs deterministic physiological calculators with a local dual-engine clinical AI stack.
 
@@ -228,6 +229,16 @@ python scripts/test_ollama_dual.py
 | **Gate 7** | **Next.js 15 Clinician Workstation** | 7 interactive views, Bento grid telemetry, TypeScript type-check, zero mock data | Scheduled |
 | **Gate 8** | **Patient Super-App & Privacy Manager** | Regulatory CDS segregation, plain-English triage, crypto-shredding | Scheduled |
 | **Gate 9** | **Master Clinical E2E Smoke Test** | Full multi-case clinical simulation (Acute STEMI, DDI blocking, RLS audit) | Scheduled |
+
+---
+
+## ⚖️ Copyright & Intellectual Property Notice
+
+**Copyright © 2025–2026 Yash Borude (MediScan Enterprise). All Rights Reserved.**
+
+* **Proprietary & Confidential:** All source code, clinical algorithms, neuro-symbolic knowledge graph schemas, physiological calculators, and AI orchestration pipelines are the exclusive intellectual property of **Yash Borude**.
+* **Strictly Prohibited:** No part of this repository may be reproduced, decompiled, reverse-engineered, redistributed, sublicensed, or used in commercial software without prior written authorization.
+* **License Reference:** Please review the full legal terms in the [`LICENSE`](file:///d:/YASH/Mediscan/LICENSE) file.
 
 ---
 

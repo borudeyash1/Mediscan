@@ -1,0 +1,42 @@
+PROPRIETARY SOFTWARE LICENSE & COPYRIGHT NOTICE
+=================================================
+
+Copyright (c) 2025–2026 Yash Borude (MediScan Enterprise). All Rights Reserved.
+
+CONFIDENTIAL & PROPRIETARY SOURCE CODE
+--------------------------------------
+This software, including all accompanying source code, documentation, architectures,
+data models, schemas, machine learning models, clinical calculators, and assets,
+is the exclusive intellectual property of Yash Borude ("Copyright Holder").
+
+RESTRICTIONS ON USE, DISTRIBUTION & REPRODUCTION
+------------------------------------------------
+1. PROHIBITED ACTS: Strictly no part of this source code or associated materials
+   may be copied, reproduced, duplicated, republished, downloaded, modified,
+   reverse engineered, disassembled, decompiled, distributed, transmitted, or
+   sublicensed in any form or by any means, electronic, mechanical, photocopying,
+   recording, or otherwise, without prior written permission from the Copyright Holder.
+
+2. COMMERCIAL USE: Commercial use, incorporation into third-party software, commercial
+   deployment, software-as-a-service (SaaS) hosting, clinical deployment, or public
+   demonstrations are strictly prohibited without an executed enterprise commercial
+   license agreement with the Copyright Holder.
+
+3. PATENTS & TRADE SECRETS: The algorithms, clinical safety gates, zero-hallucination
+   architectures, deterministic calculation pipelines, and neuro-symbolic knowledge
+   graph schemas contained herein constitute proprietary trade secrets and confidential
+   information of the Copyright Holder.
+
+MEDICAL SOFTWARE DISCLAIMER
+---------------------------
+THIS SOFTWARE IS PROVIDED "AS IS" AND "WITH ALL FAULTS," WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO
+EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+BUT NOT LIMITED TO, CLINICAL DECISION OUTCOMES, LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+For licensing inquiries, enterprise partnerships, or permission requests, please contact:
+Yash Borude (https://github.com/borudeyash1)
