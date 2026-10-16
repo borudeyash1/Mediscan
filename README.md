@@ -243,7 +243,7 @@ This software is officially registered with the **Copyright Office, Government o
 | **Application / Registration No.** | **`SW-16603/2026-CO`** |
 | **Date of Filing** | **11/04/2026** |
 | **Date of ROC (Register of Copyrights)** | **22/07/2026** |
-| **Registered Authors & Owners** | **YASH AMBADAS BORUDE** *(Lead Author & Co-Owner)*<br/>**SURAJ SIDDHARTH BAGUL** *(Co-Author & Co-Owner)*<br/>**ABHISHEK ANIL CHAUDHARI** *(Co-Author)* |
+| **Registered Authors & Owners** | **YASH AMBADAS BORUDE** *(Lead Author & Co-Owner)*<br/>**SURAJ SIDDHARTH BAGUL** *(Co-Author & Co-Owner)*<br/>**ABHISHEK ANIL CHAUDHARI** *(Co-Author)*<br/>**VEDANT JITENDRA GAIKWAD** *(Co-Author & Contributor)*<br/>**DNYANESHWAR GOKUL GALHATE** *(Co-Author & Contributor)*<br/>**DR. BAPUSAHEB JALINDAR DANGE** *(Sanjivani — Guide & Mentor)* |
 | **Language of the Work** | Python, HTML, CSS, JavaScript, Go, SQL |
 | **Statutory Framework** | The Copyright Act, 1957 (Govt. of India), Berne Convention, Universal Copyright Convention |
 
