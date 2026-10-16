@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package mediscan.telemetry.v1;
+
+option go_package = "github.com/mediscan-enterprise/proto/telemetry/v1";
+
+// VitalReading represents a single vital sign measurement from a wearable device.
+message VitalReading {
+    string recorded_at = 1;           // RFC3339 timestamp
+    string tenant_id = 2;             // UUID
+    string clinical_subject_id = 3;   // UUID (pseudonymized)
+    string device_id = 4;             // UUID
+    string loinc_code = 5;            // e.g., '8867-4' (Heart rate)
+    double metric_value = 6;
+    string ucum_unit = 7;             // e.g., '/min', '%', 'mg/dL'
+    float signal_quality_index = 8;   // 0.0 to 1.0
+    string patient_activity_state = 9; // RESTING, AMBULATORY, SLEEPING, EXERCISING
+    double ewma_z_score = 10;         // Deviation from personal 14-day baseline
+}
+
+// IngestVitalsRequest is a batch of vital readings from a device or gateway.
+message IngestVitalsRequest {
+    repeated VitalReading readings = 1;
+    string source_gateway = 2;        // Identifier of the ingestion source
+}
+
+// IngestVitalsResponse confirms ingestion.
+message IngestVitalsResponse {
+    int32 accepted_count = 1;
+    int32 rejected_count = 2;
+    string kafka_topic = 3;
+}
+
+// TelemetryIngestionService handles high-throughput vital sign ingestion.
+service TelemetryIngestionService {
+    rpc IngestVitals(IngestVitalsRequest) returns (IngestVitalsResponse);
+    rpc StreamVitals(stream VitalReading) returns (IngestVitalsResponse);
+}
