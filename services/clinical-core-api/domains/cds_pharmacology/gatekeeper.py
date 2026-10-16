@@ -13,14 +13,11 @@ Deterministic Clinical Safety Checks executed BEFORE any medication can be recom
 
 from __future__ import annotations
 
-import re
-from typing import Any, Dict, List, Optional
-from uuid import uuid4
-
 import os
+import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, TypedDict
 from uuid import uuid4
 
 # Ensure root workspace is in sys.path
@@ -35,47 +32,60 @@ except ImportError:
     import logging
     logger = logging.getLogger(__name__)
 
-try:
-    from libs.clinical_calculators.calculators import (
-        calculate_ckd_epi_2021,
-        calculate_pediatric_dose_with_adult_ceiling,
-    )
-except ImportError:
-    from libs.clinical_calculators.src.calculators import (
-        calculate_ckd_epi_2021,
-        calculate_pediatric_dose_with_adult_ceiling,
-    )
+from libs.clinical_calculators.calculators import (
+    calculate_ckd_epi_2021,
+    calculate_pediatric_dose_with_adult_ceiling,
+)
+from services.clinical_core_api.domains.cds_pharmacology.models import (
+    AllergyAlert,
+    DDIAlert,
+    DDISeverity,
+    DiseaseContraindicationAlert,
+    MedicationEvaluationRequest,
+    MedicationEvaluationResponse,
+    PediatricCeilingCheck,
+    RenalAdjustmentAlert,
+    SafetyVerdict,
+)
 
-try:
-    from .models import (
-        AllergyAlert,
-        DDIAlert,
-        DDISeverity,
-        DiseaseContraindicationAlert,
-        MedicationEvaluationRequest,
-        MedicationEvaluationResponse,
-        PediatricCeilingCheck,
-        RenalAdjustmentAlert,
-        SafetyVerdict,
-    )
-except ImportError:
-    from services.clinical_core_api.domains.cds_pharmacology.models import (
-        AllergyAlert,
-        DDIAlert,
-        DDISeverity,
-        DiseaseContraindicationAlert,
-        MedicationEvaluationRequest,
-        MedicationEvaluationResponse,
-        PediatricCeilingCheck,
-        RenalAdjustmentAlert,
-        SafetyVerdict,
-    )
+
+# ── Typed Dictionaries for Strict MyPy Compliance ───────────────
+
+class AllergyClassDef(TypedDict):
+    snomed_codes: list[str]
+    aliases: list[str]
+    blocked_drugs: list[str]
+    reaction_risk: str
+    rationale: str
+
+
+class DDIRuleDef(TypedDict):
+    drug_a: str
+    drug_b: str
+    severity: DDISeverity
+    mechanism: str
+    management: str
+
+
+class RenalRuleDef(TypedDict):
+    drug_names: list[str]
+    rxnorm_codes: list[str]
+    cutoff_egfr: float
+    is_hard_stop: bool
+    action: str
+    guidance: str
+
+
+class DiseaseContraDef(TypedDict):
+    disease_keywords: list[str]
+    disease_codes: list[str]
+    contraindicated_drugs: list[str]
+    hazard: str
 
 
 # ── Drug Class & Cross-Reactivity Ontology ────────────────────
 
-ALLERGY_CLASS_MAP = {
-    # Beta-lactams / Penicillins
+ALLERGY_CLASS_MAP: dict[str, AllergyClassDef] = {
     "PENICILLIN": {
         "snomed_codes": ["91936005", "373270004", "294532003"],
         "aliases": ["penicillin", "penicillins", "amoxicillin", "ampicillin"],
@@ -88,7 +98,6 @@ ALLERGY_CLASS_MAP = {
         "reaction_risk": "Severe Type-I IgE-mediated anaphylaxis / angioedema",
         "rationale": "Direct beta-lactam penicillin core cross-reactivity. High risk of fatal anaphylaxis.",
     },
-    # Sulfonamides
     "SULFONAMIDE": {
         "snomed_codes": ["91939003", "416098002"],
         "aliases": ["sulfa", "sulfonamide", "sulfamethoxazole", "bactrim", "septra"],
@@ -99,7 +108,6 @@ ALLERGY_CLASS_MAP = {
         "reaction_risk": "Stevens-Johnson Syndrome (SJS), Toxic Epidermal Necrolysis (TEN)",
         "rationale": "Immunologic arylamine sulfonamide cross-reactivity.",
     },
-    # NSAIDs / Aspirin
     "NSAID": {
         "snomed_codes": ["293584003", "293586001"],
         "aliases": ["nsaid", "aspirin", "ibuprofen", "naproxen"],
@@ -115,8 +123,7 @@ ALLERGY_CLASS_MAP = {
 
 # ── Curated DDI Knowledge Base (Graph Fallback & Fast Cache) ──
 
-FALLBACK_DDI_RULES = [
-    # Warfarin Combinations
+FALLBACK_DDI_RULES: list[DDIRuleDef] = [
     {
         "drug_a": "Warfarin",
         "drug_b": "Rivaroxaban",
@@ -159,7 +166,6 @@ FALLBACK_DDI_RULES = [
         "mechanism": "Additive GI ulceration and systemic bleeding hazard.",
         "management": "Avoid combination; use acetaminophen.",
     },
-    # Antiplatelet + NSAID
     {
         "drug_a": "Aspirin",
         "drug_b": "Ibuprofen",
@@ -167,7 +173,6 @@ FALLBACK_DDI_RULES = [
         "mechanism": "Ibuprofen competitively antagonizes aspirin's irreversible platelet COX-1 acetylation, blunting cardioprotection.",
         "management": "Take immediate-release aspirin at least 30 minutes before ibuprofen, or use acetaminophen.",
     },
-    # Antiarrhythmic / Inotropic
     {
         "drug_a": "Amiodarone",
         "drug_b": "Digoxin",
@@ -182,7 +187,6 @@ FALLBACK_DDI_RULES = [
         "mechanism": "Amiodarone inhibits CYP2C9, markedly potentiating warfarin anticoagulation.",
         "management": "Reduce warfarin maintenance dose by 33-50%; monitor INR weekly.",
     },
-    # Hyperkalemic Combinations
     {
         "drug_a": "Lisinopril",
         "drug_b": "Spironolactone",
@@ -197,7 +201,6 @@ FALLBACK_DDI_RULES = [
         "mechanism": "Additive potassium-sparing effect resulting in cardiac arrhythmias.",
         "management": "Monitor serum potassium closely; titrate spironolactone to <= 25 mg daily.",
     },
-    # CYP Induction / Anticoagulation
     {
         "drug_a": "Rifampicin",
         "drug_b": "Rivaroxaban",
@@ -210,7 +213,7 @@ FALLBACK_DDI_RULES = [
 
 # ── Renal Cutoffs & Guidance ───────────────────────────────────
 
-RENAL_RULES = [
+RENAL_RULES: list[RenalRuleDef] = [
     {
         "drug_names": ["metformin", "glucophage"],
         "rxnorm_codes": ["6809"],
@@ -264,7 +267,7 @@ RENAL_RULES = [
 
 # ── Disease-Drug Contraindications ────────────────────────────
 
-DISEASE_DRUG_CONTRAINDICATIONS = [
+DISEASE_DRUG_CONTRAINDICATIONS: list[DiseaseContraDef] = [
     {
         "disease_keywords": ["dengue", "dengue fever", "dengue hemorrhagic fever"],
         "disease_codes": ["1D20", "38362002"],
@@ -293,7 +296,7 @@ class PharmacologyGatekeeper:
     disease contraindications, and pediatric ceilings.
     """
 
-    def __init__(self, neo4j_driver: Optional[Any] = None):
+    def __init__(self, neo4j_driver: Optional[Any] = None) -> None:
         self.neo4j_driver = neo4j_driver
 
     def _normalize_name(self, name: str) -> str:
@@ -310,7 +313,6 @@ class PharmacologyGatekeeper:
         Returns MedicationEvaluationResponse with strict SafetyVerdict.
         """
         proposed_drug = req.proposed_drug_name.strip()
-        proposed_norm = self._normalize_name(proposed_drug)
 
         hard_stop_reasons: list[str] = []
         adjustment_reasons: list[str] = []
@@ -334,18 +336,17 @@ class PharmacologyGatekeeper:
                     is_match = True
 
                 if is_match:
-                    # Check if proposed drug is in blocked list
                     for blocked in class_info["blocked_drugs"]:
                         if self._match_drug(proposed_drug, blocked):
-                            alert = AllergyAlert(
+                            al_alert = AllergyAlert(
                                 allergen_name=allergy.get("name", class_key),
                                 allergen_snomed=allergy_snomed or class_info["snomed_codes"][0],
                                 cross_reactivity_class=class_key,
-                                reaction_risk=class_info["reaction_risk"],
+                                reaction_risk=str(class_info["reaction_risk"]),
                                 is_hard_stop=True,
-                                clinical_rationale=class_info["rationale"],
+                                clinical_rationale=str(class_info["rationale"]),
                             )
-                            allergy_alerts.append(alert)
+                            allergy_alerts.append(al_alert)
                             hard_stop_reasons.append(
                                 f"ALLERGY HARD STOP: Documented {class_key} allergy ({allergy_name}) "
                                 f"cross-reacts with proposed medication '{proposed_drug}'."
@@ -365,14 +366,14 @@ class PharmacologyGatekeeper:
                 match_b_prop = self._match_drug(proposed_drug, drug_b) and self._match_drug(active_name, drug_a)
 
                 if match_a_prop or match_b_prop:
-                    alert = DDIAlert(
+                    d_alert = DDIAlert(
                         interacting_drug_rxnorm=active_rxnorm or "UNKNOWN",
                         interacting_drug_name=active_name,
                         severity=rule["severity"],
                         mechanism=rule["mechanism"],
                         clinical_management=rule["management"],
                     )
-                    ddi_alerts.append(alert)
+                    ddi_alerts.append(d_alert)
 
                     if rule["severity"] == DDISeverity.CONTRAINDICATED:
                         hard_stop_reasons.append(
@@ -387,7 +388,6 @@ class PharmacologyGatekeeper:
         # ── Gate 3: Renal Automated Dose Adjustment & Hard Stop ────
         patient_egfr = req.patient_egfr
         if patient_egfr is None and req.patient_serum_creatinine is not None and req.patient_age_years is not None:
-            # Dynamically compute CKD-EPI 2021 eGFR
             try:
                 sex = req.patient_biological_sex or "MALE"
                 calc = calculate_ckd_epi_2021(
@@ -400,39 +400,39 @@ class PharmacologyGatekeeper:
                 logger.warning("egfr_dynamic_calc_failed: %s", str(e))
 
         if patient_egfr is not None:
-            for rule in RENAL_RULES:
+            for r_rule in RENAL_RULES:
                 match_rule = False
-                for d_name in rule["drug_names"]:
+                for d_name in r_rule["drug_names"]:
                     if self._match_drug(proposed_drug, d_name):
                         match_rule = True
                         break
                 if not match_rule and req.proposed_rxnorm_code:
-                    if str(req.proposed_rxnorm_code).strip() in rule["rxnorm_codes"]:
+                    if str(req.proposed_rxnorm_code).strip() in r_rule["rxnorm_codes"]:
                         match_rule = True
 
                 if match_rule:
-                    cutoff = rule["cutoff_egfr"]
+                    cutoff = float(r_rule["cutoff_egfr"])
                     if patient_egfr < cutoff:
-                        is_stop = rule["is_hard_stop"]
-                        alert = RenalAdjustmentAlert(
+                        is_stop = bool(r_rule["is_hard_stop"])
+                        rn_alert = RenalAdjustmentAlert(
                             drug_name=proposed_drug,
                             egfr_value=patient_egfr,
                             egfr_cutoff=cutoff,
                             is_hard_stop=is_stop,
-                            recommended_action=rule["action"],
-                            dosing_guidance=rule["guidance"],
+                            recommended_action=str(r_rule["action"]),
+                            dosing_guidance=str(r_rule["guidance"]),
                         )
-                        renal_alerts.append(alert)
+                        renal_alerts.append(rn_alert)
 
                         if is_stop:
                             hard_stop_reasons.append(
                                 f"RENAL HARD STOP: '{proposed_drug}' is contraindicated at eGFR {patient_egfr} "
-                                f"(Cutoff < {cutoff} mL/min/1.73m2). {rule['guidance']}"
+                                f"(Cutoff < {cutoff} mL/min/1.73m2). {r_rule['guidance']}"
                             )
                         else:
                             adjustment_reasons.append(
                                 f"RENAL DOSE ADJUSTMENT: '{proposed_drug}' requires dose reduction at eGFR {patient_egfr}. "
-                                f"{rule['guidance']}"
+                                f"{r_rule['guidance']}"
                             )
 
         # ── Gate 4: Disease-Drug Contraindications ──────────────────
@@ -450,14 +450,14 @@ class PharmacologyGatekeeper:
                 if is_disease_match:
                     for contra_drug in contra["contraindicated_drugs"]:
                         if self._match_drug(proposed_drug, contra_drug):
-                            alert = DiseaseContraindicationAlert(
+                            dis_alert = DiseaseContraindicationAlert(
                                 disease_name=diag.get("name", "Active Disease"),
                                 disease_icd11_or_snomed=diag_code or contra["disease_codes"][0],
                                 drug_name=proposed_drug,
                                 severity="HARD_STOP_CONTRAINDICATION",
-                                clinical_hazard=contra["hazard"],
+                                clinical_hazard=str(contra["hazard"]),
                             )
-                            disease_alerts.append(alert)
+                            disease_alerts.append(dis_alert)
                             hard_stop_reasons.append(
                                 f"DISEASE CONTRAINDICATION HARD STOP: '{proposed_drug}' is contraindicated in "
                                 f"{diag.get('name', 'this condition')} ({contra['hazard']})"

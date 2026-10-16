@@ -33,39 +33,20 @@ _workspace_root = Path(__file__).resolve().parents[4] if len(Path(__file__).reso
 if str(_workspace_root) not in sys.path:
     sys.path.insert(0, str(_workspace_root))
 
-try:
-    from libs.clinical_calculators.calculators import (
-        NEWS2Category,
-        calculate_esi_v4,
-        calculate_news2,
-        calculate_qsofa,
-    )
-except ImportError:
-    from libs.clinical_calculators.src.calculators import (
-        NEWS2Category,
-        calculate_esi_v4,
-        calculate_news2,
-        calculate_qsofa,
-    )
-
-try:
-    from .models import (
-        ClinicalEntity,
-        StructuredLabObservation,
-        TriageEvaluationInput,
-        TriageEvaluationOutput,
-        TriageSeverityLevel,
-        VitalSignsPayload,
-    )
-except ImportError:
-    from services.clinical_core_api.domains.cds_pharmacology.models import (
-        ClinicalEntity,
-        StructuredLabObservation,
-        TriageEvaluationInput,
-        TriageEvaluationOutput,
-        TriageSeverityLevel,
-        VitalSignsPayload,
-    )
+from libs.clinical_calculators.calculators import (
+    NEWS2Category,
+    calculate_esi_v4,
+    calculate_news2,
+    calculate_qsofa,
+)
+from services.clinical_core_api.domains.cds_pharmacology.models import (
+    ClinicalEntity,
+    StructuredLabObservation,
+    TriageEvaluationInput,
+    TriageEvaluationOutput,
+    TriageSeverityLevel,
+    VitalSignsPayload,
+)
 
 
 # ── Critical & Urgent Symptom Knowledge Lexicon ───────────────
