@@ -8,7 +8,8 @@
 [![Ollama](https://img.shields.io/badge/Ollama-Dual--Engine-black.svg?logo=ollama&logoColor=white)](https://ollama.ai)
 [![HL7 FHIR R4](https://img.shields.io/badge/HL7_FHIR-R4-orange.svg)](https://hl7.org/fhir)
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-[![Copyright: Yash Borude](https://img.shields.io/badge/Copyright-%C2%A9_2025--2026_Yash_Borude-blue.svg)](LICENSE)
+[![Copyright Registered: SW-16603/2026-CO](https://img.shields.io/badge/Copyright_Registered-SW--16603%2F2026--CO-brightgreen.svg)](LICENSE)
+[![Statutory Protection: Copyright Act, 1957](https://img.shields.io/badge/Statutory_Protection-Copyright_Act%2C_1957-blue.svg)](LICENSE)
 
 MediScan Enterprise is an enterprise-grade, real-time autonomous clinical decision support (CDS) and remote patient monitoring (RPM) platform. Built from the ground up for zero hallucinations, multi-tenant HIPAA isolation, and cryptographic auditability, it pairs deterministic physiological calculators with a local dual-engine clinical AI stack.
 
@@ -232,12 +233,22 @@ python scripts/test_ollama_dual.py
 
 ---
 
-## ⚖️ Copyright & Intellectual Property Notice
+## ⚖️ Statutory Copyright & Intellectual Property Notice
 
-**Copyright © 2025–2026 Yash Borude (MediScan Enterprise). All Rights Reserved.**
+This software is officially registered with the **Copyright Office, Government of India** under the provisions of the **Copyright Act, 1957**:
 
-* **Proprietary & Confidential:** All source code, clinical algorithms, neuro-symbolic knowledge graph schemas, physiological calculators, and AI orchestration pipelines are the exclusive intellectual property of **Yash Borude**.
-* **Strictly Prohibited:** No part of this repository may be reproduced, decompiled, reverse-engineered, redistributed, sublicensed, or used in commercial software without prior written authorization.
+| Registration Attribute | Official Statutory Record |
+| :--- | :--- |
+| **Title of the Work** | **"Mediscan: AI-Based Patient Report Analysis System"** |
+| **Application / Registration No.** | **`SW-16603/2026-CO`** |
+| **Date of Filing** | **11/04/2026** |
+| **Date of ROC (Register of Copyrights)** | **22/07/2026** |
+| **Registered Authors & Owners** | **YASH AMBADAS BORUDE** *(Lead Author & Co-Owner)*<br/>**SURAJ SIDDHARTH BAGUL** *(Co-Author & Co-Owner)*<br/>**ABHISHEK ANIL CHAUDHARI** *(Co-Author)* |
+| **Language of the Work** | Python, HTML, CSS, JavaScript, Go, SQL |
+| **Statutory Framework** | The Copyright Act, 1957 (Govt. of India), Berne Convention, Universal Copyright Convention |
+
+* **Proprietary & Confidential:** All source code, clinical algorithms, neuro-symbolic knowledge graph schemas, physiological calculators, and AI orchestration pipelines are the exclusive registered intellectual property of the aforementioned Copyright Owners.
+* **Strictly Prohibited:** No part of this repository may be reproduced, decompiled, reverse-engineered, redistributed, sublicensed, or used in commercial software without prior written authorization from the Copyright Owners.
 * **License Reference:** Please review the full legal terms in the [`LICENSE`](file:///d:/YASH/Mediscan/LICENSE) file.
 
 ---

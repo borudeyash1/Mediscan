@@ -1,42 +1,56 @@
-PROPRIETARY SOFTWARE LICENSE & COPYRIGHT NOTICE
-=================================================
+GOVERNMENT OF INDIA STATUTORY COPYRIGHT & PROPRIETARY SOFTWARE LICENSE
+========================================================================
 
-Copyright (c) 2025–2026 Yash Borude (MediScan Enterprise). All Rights Reserved.
+OFFICIAL STATUTORY COPYRIGHT REGISTRATION
+-----------------------------------------
+Statutory Act:         The Copyright Act, 1957 (Government of India)
+Registration / App No: SW-16603/2026-CO
+Date of Filing:        11/04/2026
+Date of ROC:           22/07/2026
+Title of the Work:     "Mediscan: AI-Based Patient Report Analysis System"
+Language of the Work:  Python, HTML, CSS, JavaScript, Go, SQL
 
-CONFIDENTIAL & PROPRIETARY SOURCE CODE
---------------------------------------
-This software, including all accompanying source code, documentation, architectures,
-data models, schemas, machine learning models, clinical calculators, and assets,
-is the exclusive intellectual property of Yash Borude ("Copyright Holder").
+REGISTERED COPYRIGHT OWNERS & AUTHORS
+-------------------------------------
+1. YASH AMBADAS BORUDE       (Lead Author & Co-Owner)
+2. SURAJ SIDDHARTH BAGUL     (Co-Author & Co-Owner)
+3. ABHISHEK ANIL CHAUDHARI   (Co-Author)
+   and Joint Contributors
 
-RESTRICTIONS ON USE, DISTRIBUTION & REPRODUCTION
+CONFIDENTIAL & PROPRIETARY INTELLECTUAL PROPERTY
 ------------------------------------------------
-1. PROHIBITED ACTS: Strictly no part of this source code or associated materials
-   may be copied, reproduced, duplicated, republished, downloaded, modified,
-   reverse engineered, disassembled, decompiled, distributed, transmitted, or
-   sublicensed in any form or by any means, electronic, mechanical, photocopying,
-   recording, or otherwise, without prior written permission from the Copyright Holder.
+This software and all associated artifacts—including but not limited to source code,
+deterministic clinical algorithms, neuro-symbolic knowledge graph schemas, AI model
+weights, multimodal diagnostic pipelines, and architectural specifications—are the
+exclusive registered intellectual property of the aforementioned Copyright Owners
+under the provisions of the Copyright Act, 1957 and applicable international treaties
+(including the Berne Convention and Universal Copyright Convention).
 
-2. COMMERCIAL USE: Commercial use, incorporation into third-party software, commercial
-   deployment, software-as-a-service (SaaS) hosting, clinical deployment, or public
-   demonstrations are strictly prohibited without an executed enterprise commercial
-   license agreement with the Copyright Holder.
+STATUTORY RESTRICTIONS ON USE, DISTRIBUTION & REPRODUCTION
+----------------------------------------------------------
+1. ALL RIGHTS RESERVED: Strictly no part of this source code, documentation, or
+   system architecture may be copied, reproduced, duplicated, republished, downloaded,
+   modified, reverse-engineered, disassembled, decompiled, distributed, transmitted,
+   or sublicensed in any form or by any means, electronic, mechanical, photocopying,
+   recording, or otherwise, without prior written authorization from the Copyright Owners.
 
-3. PATENTS & TRADE SECRETS: The algorithms, clinical safety gates, zero-hallucination
-   architectures, deterministic calculation pipelines, and neuro-symbolic knowledge
-   graph schemas contained herein constitute proprietary trade secrets and confidential
-   information of the Copyright Holder.
+2. COMMERCIAL PROHIBITION: Commercial exploitation, SaaS hosting, deployment into
+   third-party clinical or enterprise workflows, or public unauthorized distribution
+   is strictly prohibited and actionable under civil and criminal provisions of the
+   Copyright Act, 1957.
 
-MEDICAL SOFTWARE DISCLAIMER
----------------------------
-THIS SOFTWARE IS PROVIDED "AS IS" AND "WITH ALL FAULTS," WITHOUT WARRANTY OF ANY
-KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO
-EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-BUT NOT LIMITED TO, CLINICAL DECISION OUTCOMES, LOSS OF USE, DATA, OR PROFITS;
-OR BUSINESS INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+3. TRADE SECRETS: The zero-hallucination clinical logic, automated physiological
+   safety gates, and cryptographic audit ledgers contained within this repository
+   constitute proprietary trade secrets and confidential information.
 
-For licensing inquiries, enterprise partnerships, or permission requests, please contact:
-Yash Borude (https://github.com/borudeyash1)
+MEDICAL SOFTWARE & CLINICAL DECISION SUPPORT DISCLAIMER
+-------------------------------------------------------
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT OWNERS "AS IS" AND "WITH ALL FAULTS."
+NO WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, ARE OFFERED, INCLUDING MERCHANTABILITY
+OR FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL THE COPYRIGHT OWNERS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING CLINICAL DECISION OUTCOMES, DATA LOSS, LOSS OF LIFE, OR BUSINESS INTERRUPTION)
+ARISING FROM THE USE OR INABILITY TO USE THIS SYSTEM.
+
+For commercial licensing, enterprise partnerships, or legal inquiries:
+Contact: Yash Ambadas Borude (https://github.com/borudeyash1)
