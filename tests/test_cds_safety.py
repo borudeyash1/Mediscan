@@ -473,7 +473,7 @@ class TestFastAPICDSEndpoints:
     def client(self):
         sys.path.insert(0, str(Path("services/clinical-core-api").resolve()))
         from fastapi.testclient import TestClient
-        from app.main import app
+        from app.main import app  # type: ignore[import-not-found]
         return TestClient(app)
 
     def test_api_egfr_endpoint(self, client):
