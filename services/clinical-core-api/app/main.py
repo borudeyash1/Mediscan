@@ -80,6 +80,7 @@ def create_app() -> FastAPI:
 
     # --- Domain Routers ---
     app.include_router(copilot.router, prefix="/api/v2/copilot", tags=["Medical Copilot"])
+    app.include_router(diagnosis.router, prefix="/api/v2", tags=["Multimodal Diagnosis"])
     app.include_router(diagnosis.router, prefix="/api/v2/diagnosis", tags=["Multimodal Diagnosis"])
     app.include_router(document_vision.router, prefix="/api/v2/documents", tags=["Document Vision"])
     app.include_router(cds_pharmacology.router, prefix="/api/v2/cds", tags=["CDS Pharmacology"])
