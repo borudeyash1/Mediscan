@@ -16,7 +16,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import copilot, cds_pharmacology, diagnosis, document_vision, fhir_interop
+from app.routers import (
+    copilot,
+    cds_pharmacology,
+    diagnosis,
+    document_vision,
+    fhir_interop,
+    telemetry,
+    population_health,
+)
 from app.middleware.audit import AuditMiddleware
 
 logger = structlog.get_logger(__name__)
@@ -92,7 +100,10 @@ def create_app() -> FastAPI:
     app.include_router(diagnosis.router, prefix="/api/v2/diagnosis", tags=["Multimodal Diagnosis"])
     app.include_router(document_vision.router, prefix="/api/v2/documents", tags=["Document Vision"])
     app.include_router(cds_pharmacology.router, prefix="/api/v2/cds", tags=["CDS Pharmacology"])
+    app.include_router(telemetry.router, prefix="/api/v2/telemetry", tags=["Wearable RPM"])
+    app.include_router(population_health.router, prefix="/api/v2/population-health", tags=["Population Health"])
     app.include_router(fhir_interop.router, prefix="/fhir/r4", tags=["FHIR R4 Interoperability"])
+    app.include_router(fhir_interop.router, tags=["CDS Hooks & ABDM"])
 
     # --- Health Check ---
     @app.get("/health", tags=["System"])
