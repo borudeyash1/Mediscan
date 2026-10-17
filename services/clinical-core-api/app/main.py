@@ -78,6 +78,14 @@ def create_app() -> FastAPI:
     )
     app.add_middleware(AuditMiddleware)
 
+    # --- WebSocket Streaming Endpoints ---
+    from domains.copilot_voice.ambient_scribe import handle_ambient_scribe_ws
+    from fastapi import WebSocket
+
+    @app.websocket("/ws/v2/ambient-scribe/{encounter_id}")
+    async def ambient_scribe_websocket(websocket: WebSocket, encounter_id: str):
+        await handle_ambient_scribe_ws(websocket, encounter_id)
+
     # --- Domain Routers ---
     app.include_router(copilot.router, prefix="/api/v2/copilot", tags=["Medical Copilot"])
     app.include_router(diagnosis.router, prefix="/api/v2", tags=["Multimodal Diagnosis"])
